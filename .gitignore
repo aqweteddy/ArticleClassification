@@ -5,3 +5,5 @@ __*/
 roberta_wwm/rbtl3/*
 roberta_wwm/roberta_wwm_ext/*
 distilbert/distilbert-base-multilingual-cased/*
+*.out
+*.txt
