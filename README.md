@@ -14,7 +14,7 @@
 
 ## Model
 
-## Roberta-wwm-base
+### Roberta-wwm-base
 
 * 3 epoch
 * 8 batch-size
@@ -32,7 +32,7 @@ test_acc: **0.906**3105876177184    test_loss: 0.3560551377999998
 train_acc: 0.9610454063984175   train_loss: 0.013738512992858887
 ```
 
-## Distilbert
+### Distilbert
 
 * 4epoch
 * 16 batch size
@@ -51,7 +51,6 @@ train_acc: 0.9007723933699896   train_loss: 0.14890894293785095
 test_acc: 0.821698865708592     test_loss: 0.6597533390897358
 train_acc: 0.9482712985261998   train_loss: 0.010299921035766602
 ```
-
 
 ### Performance
 
