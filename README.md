@@ -16,6 +16,7 @@
 
 ### Roberta-wwm-base
 
+* (Pretrained model link)[https://github.com/ymcui/Chinese-BERT-wwm]
 * 3 epoch
 * 8 batch-size
 * 256 seq len
