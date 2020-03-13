@@ -57,7 +57,7 @@ def train(loader, model_dir, lr=2e-5, num_labels=18, epochs=4, save_steps=3000, 
 
     model = nn.DataParallel(model)
 
-    # model.train()
+    model.train()
 
     criterion = nn.CrossEntropyLoss()
     global_step = 0

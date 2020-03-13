@@ -5,6 +5,13 @@
 * ['政治時事', 'ACG', '交通工具', '3C', '人際關係＆感情', '閒聊', '運動健身', '購物', '西斯',
        '影劇', '美妝', '其他', '食物', '音樂', '旅遊', '遊戲']
 
+## Data
+
+* dcard
+* ptt
+* mobile01
+* gamer
+
 ## Model
 
 ## Roberta-wwm-base
@@ -21,7 +28,7 @@ train_acc: 0.8542825410771189   train_loss: 1.083221197128296
 test_acc: 0.9050314390484876    test_loss: 0.3094365964986496
 train_acc: 0.9224940363300494   train_loss: 1.0304343700408936
 
-test_acc: 0.9013105876177184 test_loss: 0.3560551377999998
+test_acc: **0.906**3105876177184    test_loss: 0.3560551377999998
 train_acc: 0.9610454063984175   train_loss: 0.013738512992858887
 ```
 
@@ -45,10 +52,6 @@ test_acc: 0.821698865708592     test_loss: 0.6597533390897358
 train_acc: 0.9482712985261998   train_loss: 0.010299921035766602
 ```
 
-## Server
-
-* flask
-* `[HOST]/infer_one_class?text=[TEXT]&topk=[TOPK]`
 
 ### Performance
 
