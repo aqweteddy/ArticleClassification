@@ -8,3 +8,4 @@ distilbert/distilbert-base-multilingual-cased/*
 *.out
 *.txt
 fetch_data/*
+*.ckpt

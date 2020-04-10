@@ -14,6 +14,21 @@
 
 ## Model
 
+### electra
+
+#### 3 epochs
+
+* 3 epochs
+* 8 * 8 batch_size
+* 512 seq len
+* merge_train.csv
+
+```sh
+train_acc: 0.6227425686576363, test_acc: 0.8314032920798782, train_loss: 0.4438794255256653, test_loss: 0.628982390325094
+train_acc: 0.8720725626728351, test_acc: 0.8701059766006879, train_loss: 0.4975391626358032, test_loss: 0.43683170980399416
+train_acc: 0.9063946957973625, test_acc: 0.8791534506241079, train_loss: 0.27478697896003723, test_loss: 0.40323783879734804
+```
+
 ### Roberta-wwm-base
 
 * (Pretrained model link)[https://github.com/ymcui/Chinese-BERT-wwm]
