@@ -139,7 +139,7 @@ def main():
     BATCH_SIZE = 8 * 8  # 8gpu * 16
     LR = 1e-5
     NUM_LABELS = 16
-    EPOCHS = 3
+    EPOCHS = 10
 
     # read data
     content, target = read_data('../fetch_data/merge_train.csv')
