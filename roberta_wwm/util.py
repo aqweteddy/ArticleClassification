@@ -16,6 +16,7 @@ class InputExample:
                         label: {self.label}
                         content: {self.content}"""
 
+
 class InputFeatures(Dataset):
     def __init__(self):
         self.example_ids = []
@@ -24,13 +25,12 @@ class InputFeatures(Dataset):
         self.seg_ids = []
         self.labels = []
     
-    def add(self, example_id, input_id, input_mask, seg_id, label=None):
+    def add(self, example_id, input_id, input_mask, seg_id, label):
         self.example_ids.append(example_id)
         self.input_ids.append(input_id)
         self.seg_ids.append(seg_id)
         self.input_masks.append(input_mask)
-        if label is not None:
-            self.labels.append(label)
+        self.labels.append(label)
     
     def __len__(self):
         return len(self.example_ids)
@@ -50,8 +50,10 @@ class DataProcessor(object):
         return self.__create_examples(contents, labels)
     
     def get_label_id(self, label):
-        labels = ['政治時事', 'ACG', '交通工具', '3C', '人際關係＆感情', '閒聊', '運動健身', '購物', '西斯',
-       '影劇', '美妝', '其他', '食物', '音樂', '旅遊', '遊戲']
+        labels = ['財經', '地方', '軍武', '社會', '3C家電', '親子', 'ET車雲', '影劇', '生活', '國際',
+       '政治', '旅遊', '大陸', '體育', '健康', 'ET來了', '寵物動物', '新奇', '保險', '時尚',
+       '房產雲', '論壇', '消費', '法律', '遊戲', '網搜', '名家', '公益', '男女', '電影', '電商',
+       '公民(勿用)', '運勢']
         for idx, tmp in enumerate(labels):
             if tmp == label:
                 return idx

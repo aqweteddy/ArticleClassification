@@ -14,6 +14,16 @@
 
 ## Model
 
+### ALBERT
+
+#### Infer
+
+* Data: 50000
+* batch_size = 32
+* test_acc: 0.9083819079923721
+* test_loss: 0.2783640064132267
+* encode + infer: 56sec + 7:418
+
 ### electra
 
 #### 3 epochs
@@ -33,6 +43,14 @@ train_acc: 0.9537589253084459, test_acc: 0.8857686740350325, train_loss: 0.19591
 train_acc: 0.9841, test_acc: 0.8849, train_loss: 0.02976, test_loss: 0.4857
 ```
 
+#### Infer
+
+* Data: 50000
+* batch_size = 32
+* test_acc: 0.9318949421604534
+* test_loss: 0.20936249433441645
+* encode + infer: 56sec + 9:41
+
 ### Roberta-wwm-base
 
 * (Pretrained model link)[https://github.com/ymcui/Chinese-BERT-wwm]
@@ -51,6 +69,14 @@ train_acc: 0.9224940363300494   train_loss: 1.0304343700408936
 test_acc: **0.906**3105876177184    test_loss: 0.3560551377999998
 train_acc: 0.9610454063984175   train_loss: 0.013738512992858887
 ```
+
+#### Infer
+
+* Data: 50000
+* batch_size = 32
+* test_acc: 0.9558392067661884
+* test_loss: 0.14394348913175664
+* encode + infer: 56sec + 9:19
 
 ### Distilbert
 

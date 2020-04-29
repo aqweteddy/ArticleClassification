@@ -9,15 +9,15 @@ from sklearn.metrics import precision_score
 import torch
 import torch.nn as nn
 from tensorboardX import SummaryWriter
-from transformers import BertTokenizerFast, BertForSequenceClassification
+from transformers import BertTokenizerFast, AlbertForSequenceClassification
 from apex import amp
 import os
 
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "2,3"
-print(torch.cuda.device_count())
+os.environ["CUDA_VISIBLE_DEVICES"] = "4,5"
 
 DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+print(torch.cuda.device_count())
 
 writer = SummaryWriter('./tfboard_log')
 
@@ -53,7 +53,7 @@ def evaluate(loader, model):
 
 def train(loader, model_dir, lr=2e-5, num_labels=18, epochs=4, save_steps=3000, test_loader=None, eval_callback=None):
     torch.cuda.manual_seed_all(32)
-    model = BertForSequenceClassification.from_pretrained(model_dir, num_labels=num_labels).cuda()
+    model = AlbertForSequenceClassification.from_pretrained(model_dir, num_labels=num_labels).cuda()
     params = list(model.parameters())
     optimizer = torch.optim.AdamW(params, lr=lr)
     model, optimizer = amp.initialize(model, optimizer, opt_level='O1')
@@ -96,7 +96,7 @@ def train(loader, model_dir, lr=2e-5, num_labels=18, epochs=4, save_steps=3000, 
                 writer.add_scalar(f'Train/Accuracy', precision_score(ys_true, ys_pred, average='weighted'), global_step=global_step+1)
                 writer.flush()
 
-            if (global_step+1) % 9375 == 0:
+            if (global_step+1) % 4688 == 0:
                 if eval_callback:
                     test_acc, test_loss = eval_callback(test_loader, model)
                     writer.add_text("history", f"step: {global_step}\ttest_acc: {test_acc}\ttest_loss: {test_loss}", global_step=global_step+1)
@@ -126,9 +126,9 @@ def read_data(file):
 def main():
     NUM_TRAIN_DATA = 150000
     NUM_TEST_DATA = 5000
-    MODEL_DIR = './roberta_wwm_ext'
+    MODEL_DIR = './albert_base'
     MAX_LEN = 512
-    BATCH_SIZE = 8 * 2 # 8gpu * 16
+    BATCH_SIZE = 16 * 2 # 8gpu * 16
     LR = 1e-5
     NUM_LABELS = 33
     EPOCHS = 4

@@ -8,13 +8,17 @@ from sklearn.utils import shuffle
 from tensorboardX import SummaryWriter
 from torch.utils.data import DataLoader
 from tqdm import tqdm
-from transformers import ElectraModel, ElectraTokenizer
+from transformers import ElectraModel, ElectraTokenizerFast
 
 from model import ElectraCls
 from util import DataProcessor, InputFeatures, convert_examples_to_features
+import os
 
+
+os.environ["CUDA_VISIBLE_DEVICES"] = "0,1"
 DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print(DEVICE)
+print(torch.cuda.device_count())
 
 writer = SummaryWriter('./tfboard_log')
 
@@ -99,7 +103,7 @@ def train(loader, model_dir, lr=2e-5, num_labels=18, epochs=4, save_steps=3000, 
                                                                      ys_pred, average='weighted'), global_step=global_step+1)
                 writer.flush()
 
-            if (global_step+1) % 500 == 0:
+            if (global_step+1) % 9375 == 0:
                 if eval_callback:
                     test_acc, test_loss = eval_callback(test_loader, model)
                     writer.add_text(
@@ -125,38 +129,39 @@ def train(loader, model_dir, lr=2e-5, num_labels=18, epochs=4, save_steps=3000, 
 
 
 def read_data(file):
-    df = pd.read_csv(file)
+    df = pd.read_json(file)
     df = shuffle(df)
-    content = (df['raw_title'] + ' ' + df['raw_text']).to_list()
+    content = (df['title'] + ' ' + df['content']).to_list()
     target = df['category'].to_list()
     return content, target
 
 
 def main():
-    NUM_TRAIN_DATA = 85000
+    NUM_TRAIN_DATA = 150000
+    NUM_TEST_DATA = 5000
     MODEL_DIR = './electra_chinese_base'
     MAX_LEN = 512
-    BATCH_SIZE = 8 * 8  # 8gpu * 16
+    BATCH_SIZE = 8 * 2 # 8gpu * 16
     LR = 1e-5
-    NUM_LABELS = 16
-    EPOCHS = 10
+    NUM_LABELS = 33
+    EPOCHS = 4
 
     # read data
-    content, target = read_data('../fetch_data/merge_train.csv')
+    content, target = read_data('../../corpus/ettoday_2017.json')
 
     # train dataloader
     examples = DataProcessor().get_train_examples(
         content[:NUM_TRAIN_DATA], target[:NUM_TRAIN_DATA])
     train_dataset = convert_examples_to_features(
-        examples, max_length=MAX_LEN, tokenizer=ElectraTokenizer.from_pretrained(MODEL_DIR))
+        examples, max_length=MAX_LEN, tokenizer=ElectraTokenizerFast.from_pretrained(MODEL_DIR))
     train_loader = DataLoader(
         train_dataset, shuffle=True, batch_size=BATCH_SIZE)
 
     # test dataloader
     examples = DataProcessor().get_test_examples(
-        content[NUM_TRAIN_DATA:], target[NUM_TRAIN_DATA:])
+        content[NUM_TRAIN_DATA:NUM_TEST_DATA + NUM_TRAIN_DATA], target[NUM_TRAIN_DATA:NUM_TRAIN_DATA + NUM_TEST_DATA])
     test_dataset = convert_examples_to_features(
-        examples, max_length=MAX_LEN, tokenizer=ElectraTokenizer.from_pretrained(MODEL_DIR))
+        examples, max_length=MAX_LEN, tokenizer=ElectraTokenizerFast.from_pretrained(MODEL_DIR))
     test_loader = DataLoader(
         test_dataset, shuffle=False, batch_size=BATCH_SIZE)
 

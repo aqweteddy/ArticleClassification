@@ -46,7 +46,7 @@ class DataProcessor(object):
     def get_train_examples(self, contents, labels):
         return self.__create_examples(contents, labels)
     
-    def get_test_examples(self, contents, labels=None):
+    def get_test_examples(self, contents, labels):
         return self.__create_examples(contents, labels)
     
     def get_label_id(self, label):
@@ -64,11 +64,14 @@ class DataProcessor(object):
             labels = [None] * len(contents)
         for cnt, content, label in zip(range(len(contents)), contents, labels):
             if content.strip():
-                examples.append(InputExample(
-                    example_id=cnt,
-                    content=content,
-                    label=self.get_label_id(label) if label else None
-                ))
+                try:
+                    examples.append(InputExample(
+                        example_id=cnt,
+                        content=content,
+                        label=self.get_label_id(label)
+                    ))
+                except Exception:
+                    pass
         return examples
 
 
